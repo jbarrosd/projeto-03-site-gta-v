@@ -1,0 +1,62 @@
+/* ============================================================
+   TOKENS — variáveis de design globais (Design Tokens)
+   Centraliza todas as cores, espaçamentos, fontes e transições.
+   Para alterar o visual do site, mude aqui — reflete em tudo.
+   ============================================================ */
+:root {
+  /* ---- Cores de fundo ---- */
+  --color-bg:          #0b0b0b;   /* fundo principal — preto profundo */
+  --color-bg-section:  #161616;   /* fundo de seções alternadas */
+  --color-surface:     #111111;   /* superfície de menus, drawers */
+  --color-surface-alt: #1a1a1a;   /* superfície secundária (hover de cards) */
+
+  /* ---- Bordas ---- */
+  --color-border:      rgba(255, 255, 255, 0.12); /* borda visível mas discreta */
+  --color-border-dim:  rgba(255, 255, 255, 0.06); /* borda quase invisível */
+
+  /* ---- Cores de texto ---- */
+  --color-text:        #e8e8e8;   /* texto principal — branco suave */
+  --color-text-muted:  #888888;   /* texto secundário — cinza médio */
+  --color-white:       #ffffff;
+  --color-black:       #000000;
+
+  /* ---- Cores de destaque ---- */
+  --color-accent:      #fcaf17;              /* amarelo Rockstar — cor de ação */
+  --color-accent-dim:  rgba(252, 175, 23, 0.15); /* amarelo translúcido para fundos */
+
+  /* ---- Cores de plataforma ---- */
+  --color-ps:          #00439c;   /* azul PlayStation */
+  --color-xbox:        #387a26;   /* verde Xbox */
+  --color-pc:          #464646;   /* cinza PC */
+
+  /* ---- Famílias de fonte ---- */
+  --font-display:   'ChaletComprime', sans-serif; /* títulos e botões em maiúsculo */
+  --font-body:      'Chalet', sans-serif;         /* textos corridos e parágrafos */
+  --font-icon:      'Font Awesome 6 Brands', sans-serif; /* ícones de redes sociais */
+
+  /* ---- Espaçamentos (escala de 8px) ---- */
+  --space-xs:   8px;
+  --space-sm:  16px;
+  --space-md:  24px;
+  --space-lg:  40px;
+  --space-xl:  64px;
+  --space-2xl: 96px;
+
+  /* ---- Altura do cabeçalho fixo ---- */
+  --header-height: 72px;
+
+  /* ---- Velocidades de transição CSS ---- */
+  --transition-fast:   0.2s ease;  /* hover rápido (botões, links) */
+  --transition-base:   0.35s ease; /* animações padrão (modais, menus) */
+  --transition-slow:   0.6s ease;  /* animações lentas (abertura de painéis) */
+
+  /* ---- Raios de borda ---- */
+  --radius-sm:  4px;   /* botões pequenos */
+  --radius-md:  8px;   /* cards e modais */
+  --radius-lg: 12px;   /* containers maiores */
+
+  /* ---- Camadas de empilhamento (z-index) ---- */
+  --z-header:  100;   /* header fixo fica acima do conteúdo */
+  --z-modal:  1000;   /* modal fica acima de absolutamente tudo */
+  --z-fab:     200;   /* botão flutuante (voltar ao topo) */
+}

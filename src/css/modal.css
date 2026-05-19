@@ -1,0 +1,94 @@
+/* ============================================================
+   MODAL — janela flutuante para o trailer do GTA V
+   Aparece sobre todo o conteúdo quando o usuário clica em "Assistir Trailer"
+   ============================================================ */
+
+/* Camada que cobre toda a tela — começa invisível */
+.modal {
+  position: fixed;               /* fica fixo mesmo com scroll */
+  inset: 0;                      /* cobre a tela inteira */
+  z-index: var(--z-modal);       /* z-index máximo — acima de tudo */
+  display: flex;
+  align-items: center;           /* centraliza o vídeo verticalmente */
+  justify-content: center;       /* centraliza o vídeo horizontalmente */
+
+  /* Estado inicial: invisível e não interativo */
+  visibility: hidden;            /* impede cliques mesmo sem opacity */
+  opacity: 0;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+/* Estado ativo — quando o JS adiciona a classe .is-open */
+.modal.is-open {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Fundo escuro semi-transparente clicável (fecha o modal ao clicar) */
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92); /* quase preto para destacar o vídeo */
+}
+
+/* Container do vídeo — começa menor e cresce ao abrir (efeito de zoom) */
+.modal__container {
+  position: relative;
+  z-index: 1;                     /* acima do backdrop */
+  width: 90vw;                    /* 90% da largura da janela */
+  max-width: 960px;               /* mas nunca maior que 960px */
+  aspect-ratio: 16/9;             /* proporção widescreen padrão */
+  border-radius: var(--radius-md);
+  overflow: hidden;               /* garante que o vídeo não ultrapasse as bordas */
+  border: 1px solid var(--color-border);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8); /* sombra profunda */
+  transform: scale(0.9);          /* começa ligeiramente menor */
+  transition: transform var(--transition-base);
+}
+
+/* Quando o modal abre: cresce para o tamanho normal (efeito de zoom in) */
+.modal.is-open .modal__container {
+  transform: scale(1);
+}
+
+/* O vídeo do trailer ocupa todo o container */
+.modal__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* preenche sem distorcer */
+  display: block;
+  outline: none;      /* remove outline padrão do elemento de vídeo */
+}
+
+/* Botão X para fechar o modal — posicionado no canto superior direito do vídeo */
+.modal__close {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);   /* fundo escuro para contraste sobre o vídeo */
+  border-radius: 50%;                /* formato circular */
+  border: 1px solid var(--color-border);
+  color: var(--color-white);
+  font-size: 1.2rem;
+  cursor: pointer;
+  /* gira 90° no hover para dar feedback visual de interação */
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  z-index: 2; /* acima do vídeo */
+}
+
+/* No hover: fundo clareado e rotação de 90° no ícone X */
+.modal__close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: rotate(90deg);
+}
+
+/* Foco visível para navegação por teclado */
+.modal__close:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

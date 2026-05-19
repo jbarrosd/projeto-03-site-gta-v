@@ -1,0 +1,248 @@
+/* ============================================================
+   COMPONENTS — botões, cards e componentes reutilizáveis
+   ============================================================ */
+
+/* ---- Botões ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 14px 32px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid transparent;
+  transition:
+    background var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-fast);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Botão primário (ghost) */
+.btn--ghost {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: var(--color-white);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  background: var(--color-white);
+  color: var(--color-black);
+  border-color: var(--color-white);
+}
+
+/* Botão accent */
+.btn--accent {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-black);
+}
+
+.btn--accent:hover,
+.btn--accent:focus-visible {
+  background: #e09c10;
+  border-color: #e09c10;
+}
+
+/* ---- Plataformas ---- */
+.platform-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: center;
+  justify-content: center;
+}
+
+.platform-list img {
+  height: 28px;
+  width: auto;
+  filter: brightness(0.8);
+  transition: filter var(--transition-fast);
+}
+
+.platform-list img:hover {
+  filter: brightness(1.2);
+}
+
+/* ---- Card de compra ---- */
+.purchase-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  background: var(--color-black);
+  border: 1px solid var(--color-border-dim);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  overflow: hidden;
+  transition: border-color var(--transition-base);
+  flex: 1;
+  min-width: 280px;
+  max-width: 500px;
+}
+
+.purchase-card:hover {
+  border-color: var(--color-border);
+}
+
+.purchase-card__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  object-fit: cover;
+  z-index: 0;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+  pointer-events: none;
+}
+
+.purchase-card__cover {
+  position: relative;
+  z-index: 1;
+  width: 220px;
+  height: auto;
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transition: transform var(--transition-base);
+}
+
+.purchase-card:hover .purchase-card__cover {
+  transform: translateY(-6px);
+}
+
+.purchase-card__info {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+}
+
+.purchase-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--color-white);
+}
+
+.purchase-card__desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* Dropdown de plataformas */
+.platform-selector {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 280px;
+}
+
+.platform-selector__btn {
+  width: 100%;
+  padding: 14px 24px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  transition: background var(--transition-base), border-color var(--transition-base);
+  cursor: pointer;
+}
+
+.platform-selector__btn:hover,
+.platform-selector__btn:focus-visible {
+  background: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-black);
+}
+
+.platform-selector__btn .chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--transition-base);
+}
+
+.platform-selector__btn[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+.platform-selector__dropdown {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  gap: var(--space-sm);
+  flex-direction: column;
+  z-index: 10;
+}
+
+.platform-selector__dropdown.is-open {
+  display: flex;
+  animation: fadeSlideUp 0.25s ease forwards;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.platform-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 10px var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-dim);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.platform-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--color-border);
+}
+
+.platform-option--ps:hover   { border-color: var(--color-ps); }
+.platform-option--xbox:hover { border-color: var(--color-xbox); }
+.platform-option--pc:hover   { border-color: var(--color-pc); }
+
+.platform-option img {
+  height: 22px;
+  width: auto;
+}
+
+.platform-option span {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--color-text);
+}

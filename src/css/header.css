@@ -1,0 +1,163 @@
+/* ============================================================
+   HEADER — barra de navegação fixa no topo da página
+   Fica sempre visível enquanto o usuário rola a página
+   ============================================================ */
+
+/* Barra fixa no topo com efeito de vidro fosco */
+.header {
+  position: fixed;              /* gruda no topo e não rola com a página */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height); /* altura definida no tokens.css */
+  background-color: rgba(11, 11, 11, 0.96); /* fundo quase opaco */
+  backdrop-filter: blur(8px);               /* efeito de vidro fosco no fundo */
+  -webkit-backdrop-filter: blur(8px);       /* mesmo efeito para Safari */
+  border-bottom: 1px solid var(--color-border-dim); /* linha sutil na borda inferior */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo na esquerda, menu na direita */
+  padding: 0 var(--space-xl);
+  z-index: var(--z-header);      /* fica acima do conteúdo da página */
+}
+
+/* ---- Área da logo (Rockstar + separador + GTA) ---- */
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0; /* não encolhe quando o espaço é limitado */
+}
+
+/* Tamanho das imagens de logo no header */
+.header__logo img {
+  height: 32px;
+  width: auto; /* largura proporcional automática */
+}
+
+/* Linha vertical entre as logos (Rockstar | GTA) */
+.header__logo-divider {
+  width: 1px;
+  height: 28px;
+  background-color: var(--color-border);
+}
+
+/* ---- Navegação principal (links do menu) ---- */
+.header__nav {
+  display: flex;
+  align-items: center;
+}
+
+/* Lista horizontal de itens do menu */
+.header__menu {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+/* Cada link do menu */
+.header__menu-item a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-xs) var(--space-sm);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;     /* leve espaçamento entre letras */
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background var(--transition-fast);
+  position: relative;          /* necessário para posicionar o sublinhado ::after */
+}
+
+/* Sublinhado amarelo animado que aparece no hover — criado com pseudo-elemento */
+.header__menu-item a::after {
+  content: '';               /* pseudo-elemento vazio (só visual) */
+  position: absolute;
+  bottom: 4px;
+  left: var(--space-sm);
+  right: var(--space-sm);
+  height: 1px;
+  background: var(--color-accent);  /* cor amarela Rockstar */
+  transform: scaleX(0);             /* começa invisível (largura zero) */
+  transform-origin: left;           /* expande da esquerda para a direita */
+  transition: transform var(--transition-base);
+}
+
+/* No hover: texto fica branco */
+.header__menu-item a:hover {
+  color: var(--color-white);
+}
+
+/* No hover: sublinhado expande para a largura total */
+.header__menu-item a:hover::after {
+  transform: scaleX(1); /* de 0% para 100% de largura */
+}
+
+/* Ícone de link externo (abre em nova aba) */
+.header__menu-item a .icon-external {
+  width: 12px;
+  height: 12px;
+  opacity: 0.6;
+}
+
+/* ---- Botão Hamburguer (visível apenas em mobile) ---- */
+.header__hamburger {
+  display: none;           /* oculto em desktop — aparece via responsive.css */
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;                /* espaço entre as 3 linhas */
+  width: 36px;
+  height: 36px;
+  padding: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: calc(var(--z-header) + 5); /* acima do menu lateral para ser clicável */
+}
+
+/* Cada linha do ícone hamburguer */
+.header__hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-white);
+  border-radius: 2px;
+  /* permite animar individualmente cada linha */
+  transition: transform var(--transition-base), opacity var(--transition-base);
+  transform-origin: center;
+}
+
+/* ---- Animação hamburguer → X (quando o menu está aberto) ---- */
+
+/* Linha de cima desce e gira 45° */
+.header__hamburger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+/* Linha do meio some */
+.header__hamburger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+/* Linha de baixo sobe e gira -45° — forma o X junto com a linha de cima */
+.header__hamburger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---- Overlay escuro atrás do menu mobile ---- */
+/* Cobre o conteúdo da página quando o menu está aberto */
+.header__overlay {
+  display: none;              /* oculto em desktop — aparece via responsive.css */
+  position: fixed;
+  inset: 0;                   /* cobre a tela toda */
+  background: rgba(0, 0, 0, 0.6);
+  z-index: calc(var(--z-header) - 1); /* abaixo do header mas acima do conteúdo */
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+/* Estado visível — ativado pelo JS ao abrir o menu */
+.header__overlay.is-visible {
+  opacity: 1;
+}

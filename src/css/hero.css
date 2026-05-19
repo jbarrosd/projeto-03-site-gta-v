@@ -1,0 +1,100 @@
+/* ============================================================
+   HERO — seção de destaque principal (primeira tela que o usuário vê)
+   Ocupa 100% da altura da janela com imagem de fundo e texto sobreposto
+   ============================================================ */
+
+/* Container principal — ocupa toda a altura da tela */
+.hero {
+  position: relative;    /* necessário para posicionar fundo e overlays */
+  min-height: 100vh;     /* nunca menor que a altura da janela */
+  display: flex;
+  align-items: center;   /* centraliza o conteúdo verticalmente */
+  overflow: hidden;      /* impede que o fundo extrapole os limites */
+}
+
+/* Imagem de fundo que cobre toda a seção hero */
+.hero__bg {
+  position: absolute;          /* remove do fluxo, fica atrás de tudo */
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;           /* preenche sem distorcer */
+  object-position: center;     /* centraliza o recorte */
+  z-index: 0;
+}
+
+/* Gradiente horizontal: escuro na esquerda (onde o texto está), transparente na direita */
+/* Criado com ::after para não precisar de um elemento extra no HTML */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.92) 0%,   /* quase opaco onde o texto começa */
+    rgba(0, 0, 0, 0.75) 40%,
+    rgba(0, 0, 0, 0.25) 70%,
+    transparent 100%            /* completamente transparente na direita */
+  );
+  z-index: 1; /* acima da imagem de fundo */
+}
+
+/* Gradiente vertical no rodapé do hero — transição suave para a próxima seção */
+.hero::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent, var(--color-bg));
+  z-index: 2; /* acima do gradiente horizontal */
+}
+
+/* Área do conteúdo textual (logos, título, subtítulo, botões) */
+.hero__content {
+  position: relative;
+  z-index: 3;                            /* acima de todos os overlays */
+  padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
+  max-width: 700px;                      /* limita a largura para boa leitura */
+  display: flex;
+  flex-direction: column;               /* empilha: logos > título > subtítulo > botões */
+  gap: var(--space-lg);
+}
+
+/* Linha com as logos do GTA V e GTA Online lado a lado */
+.hero__logos {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+/* Tamanho das logos no hero */
+.hero__logos img {
+  max-height: 60px;
+  width: auto; /* largura proporcional */
+}
+
+/* Título principal — tamanho fluido que se adapta ao tamanho da tela */
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem); /* mínimo 2rem, ideal 4vw, máximo 3.5rem */
+  line-height: 1.1;
+  color: var(--color-white);
+}
+
+/* Subtítulo descritivo abaixo do título principal */
+.hero__subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.7;
+  color: var(--color-text);
+  max-width: 480px; /* largura máxima para conforto de leitura */
+}
+
+/* Linha com os botões de ação (Trailer + Compre Já) */
+.hero__actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap; /* quebra linha em telas muito pequenas */
+}

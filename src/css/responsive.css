@@ -1,66 +1,267 @@
-@media (max-width: 1024px){
-    .cabecalho{
-        justify-content: center;
-        flex-direction: column;
-        padding: 50px 0;
-        gap: 15px;
-    }
+/* ============================================================
+   RESPONSIVE — adaptações para diferentes tamanhos de tela
+   Estratégia: Mobile First → estilos base no CSS principal,
+   aqui sobreescrevemos apenas o que muda em cada breakpoint.
+   Ordem: Tablet (≤1024px) → Mobile (≤768px) → Mobile pequeno (≤425px)
+   ============================================================ */
 
-    .cabecalho .menu li a{
-        padding: 15px;
-    }
+/* ======================================================
+   TABLET — telas até 1024px (ex: iPad, notebooks pequenos)
+   ====================================================== */
+@media (max-width: 1024px) {
 
-    .home .infomacoes{
-        padding: 30px;
-    }
+  /* Header: reduz padding lateral */
+  .header {
+    padding: 0 var(--space-lg);
+  }
 
-    .home .infomacoes img{
-        max-width: 100px;
-    }
+  /* Ativa o botão hamburguer — em desktop fica display:none */
+  .header__hamburger {
+    display: flex;
+  }
 
-    .home .infomacoes .titulo{
-    font-size: 40px;
-}
+  /* Menu vira um painel lateral que desliza da direita */
+  .header__nav {
+    position: fixed;
+    top: 0;
+    right: -100%;                    /* começa fora da tela à direita */
+    width: min(320px, 80vw);         /* no máximo 320px ou 80% da tela */
+    height: 100dvh;                  /* altura dinâmica (considera barra do celular) */
+    background: var(--color-surface);
+    border-left: 1px solid var(--color-border);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: var(--space-2xl) var(--space-xl);
+    transition: right var(--transition-base); /* animação de deslize */
+    z-index: var(--z-header);
+  }
 
-    .compre-ja .cartao{
-        width: 70%;
-    }
-}
+  /* Quando o JS adiciona .is-open: menu entra na tela */
+  .header__nav.is-open {
+    right: 0;
+  }
 
-@media (max-width: 768px){
-    .compre-ja{
-        padding: 30px;
-    }
-
-    .compre-ja .cartao{
-    padding: 80px 20px;
+  /* Menu vira lista vertical no painel lateral */
+  .header__menu {
+    flex-direction: column;
+    gap: var(--space-sm);
     width: 100%;
+  }
+
+  /* Links maiores no mobile para facilitar toque */
+  .header__menu-item a {
+    font-size: 1.2rem;
+    padding: var(--space-sm) 0;
+  }
+
+  /* Ativa o overlay escuro atrás do menu — em desktop fica display:none */
+  .header__overlay {
+    display: block;
+  }
+
+  /* Hero: adiciona padding-top para não ficar atrás do header fixo */
+  .hero__content {
+    padding: calc(var(--header-height) + var(--space-xl)) var(--space-lg) var(--space-xl);
+    max-width: 100%; /* sem limite de largura — usa toda a tela */
+  }
+
+  /* Seções About: muda de 2 colunas para 1 coluna (empilha) */
+  .about-gtav .section__inner,
+  .about-gtaonline .section__inner {
+    grid-template-columns: 1fr; /* uma coluna só */
+    padding: var(--space-xl) var(--space-lg);
+    min-height: auto;           /* sem altura mínima forçada */
+  }
+
+  /* Restaura a ordem natural do GTA Online (texto primeiro em mobile) */
+  .about-gtaonline__text {
+    order: 0; /* cancela o order:-1 do desktop */
+  }
+
+  /* Personagens: 2 cards por linha (de 3 para 2) */
+  .characters__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .characters .section__inner {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  /* Comprar: padding reduzido */
+  .purchase {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  /* Cards de compra empilhados verticalmente */
+  .purchase__grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Card de compra: largura máxima para não ficar largo demais */
+  .purchase-card {
+    max-width: 480px;
+    width: 100%;
+  }
+
+  /* Footer: padding reduzido */
+  .footer {
+    padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  }
 }
 
-    .compre-ja .infomacoes h3{
-        font-size: 35px;
-    }
+/* ======================================================
+   MOBILE — telas até 768px (smartphones em geral)
+   ====================================================== */
+@media (max-width: 768px) {
 
-    .compre-ja .infomacoes .plataformas{
-        flex-direction: column;
-    }
+  /* Header: padding mínimo nas laterais */
+  .header {
+    padding: 0 var(--space-md);
+  }
 
-    .btn-plataforma{
-        margin-top: 15px;
-        padding: 15px;
-    }
+  /* Hero: gradiente muda para vertical (escurece de cima para baixo)
+     porque o texto ocupa toda a largura no mobile */
+  .hero::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+  }
 
-    .btn-trailer, .btn-comprar{
-        width: 100%;
-    }
+  /* Hero: padding-top menor e gap reduzido entre elementos */
+  .hero__content {
+    padding: calc(var(--header-height) + var(--space-lg)) var(--space-md) var(--space-xl);
+    gap: var(--space-md);
+  }
+
+  /* Logos do hero quebram linha se não couberem lado a lado */
+  .hero__logos {
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  /* Logos menores no mobile */
+  .hero__logos img {
+    max-height: 44px;
+  }
+
+  /* Botões do hero empilhados verticalmente */
+  .hero__actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Cada botão ocupa a largura total disponível */
+  .hero__actions .btn {
+    width: 100%;
+  }
+
+  /* Seções About: padding lateral mínimo */
+  .about-gtav .section__inner,
+  .about-gtaonline .section__inner {
+    padding: var(--space-xl) var(--space-md);
+    gap: var(--space-md);
+  }
+
+  /* Personagens: 1 card por linha (de 2 para 1) */
+  .characters__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .characters .section__inner {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  /* Seção Comprar: padding lateral mínimo */
+  .purchase {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  /* Card de compra: padding interno reduzido */
+  .purchase-card {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  /* Botão de plataforma: fonte menor no mobile */
+  .platform-selector__btn {
+    padding: 12px var(--space-md);
+    font-size: 0.9rem;
+  }
+
+  /* Footer: padding lateral mínimo */
+  .footer {
+    padding: var(--space-xl) var(--space-md) var(--space-lg);
+  }
+
+  /* Linhas do footer empilhadas (deixam de ser flex row) */
+  .footer__top,
+  .footer__middle,
+  .footer__credits {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  /* Ícones sociais mais próximos */
+  .footer__socials {
+    gap: var(--space-sm);
+  }
+
+  /* Modal ocupa mais largura da tela no mobile */
+  .modal__container {
+    width: 95vw;
+  }
+
+  /* Botão de fechar do modal: posição ajustada para tela pequena */
+  .modal__close {
+    top: var(--space-xs);
+    right: var(--space-xs);
+  }
+
+  /* Botão voltar ao topo: afastamento reduzido das bordas */
+  .scroll-top {
+    bottom: var(--space-md);
+    right: var(--space-md);
+  }
 }
 
+/* ======================================================
+   MOBILE PEQUENO — telas até 425px (iPhones SE, celulares compactos)
+   ====================================================== */
 @media (max-width: 425px) {
-    main::after{
-        background: linear-gradient(90deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.4) 100%, transparent 65%);
-    }
-}
 
-.compre-ja .cartao .capa-do-jogo {
-    max-width: 80%;
+  /* Reduz os espaçamentos grandes para economizar espaço vertical */
+  :root {
+    --space-xl:  48px; /* de 64px para 48px */
+    --space-2xl: 64px; /* de 96px para 64px */
+  }
+
+  /* Título do hero: tamanho fixo menor (clamp não escala para tão pequeno) */
+  .hero__title {
+    font-size: 1.8rem;
+  }
+
+  /* Títulos das seções About: reduzidos para caber em tela estreita */
+  .about-gtav__text h2,
+  .about-gtaonline__text h2 {
+    font-size: 1.9rem;
+  }
+
+  /* Nome do personagem no card: reduzido */
+  .character-card__name {
+    font-size: 1.6rem;
+  }
+
+  /* Título do card de compra: reduzido */
+  .purchase-card__title {
+    font-size: 1.4rem;
+  }
+
+  /* Capa do jogo no card: menor para não ocupar tanto espaço */
+  .purchase-card__cover {
+    width: 160px;
+  }
 }

@@ -1,0 +1,259 @@
+/* ============================================================
+   SECTIONS — seções de conteúdo (about, characters, compra)
+   Cada bloco cuida de uma seção específica da página
+   ============================================================ */
+
+/* ---- Seção base (usada por todas as seções) ---- */
+.section {
+  position: relative; /* necessário para posicionar o fundo e overlay */
+  overflow: hidden;   /* impede que elementos filhos vazem para fora */
+}
+
+/* Imagem de fundo que cobre toda a seção */
+.section__bg {
+  position: absolute; /* remove do fluxo normal e cobre a seção inteira */
+  inset: 0;           /* atalho para top/right/bottom/left: 0 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* mantém proporção sem distorcer */
+  object-position: center;  /* centraliza o recorte da imagem */
+  z-index: 0;               /* fica atrás de tudo */
+}
+
+/* Camada escura semi-transparente sobre o fundo para melhorar leitura do texto */
+.section__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1; /* fica acima do fundo, mas abaixo do conteúdo */
+}
+
+/* Container do conteúdo real da seção (texto, imagens, etc.) */
+.section__inner {
+  position: relative;
+  z-index: 2; /* fica acima do overlay e do fundo */
+}
+
+/* ---- Seção: Sobre o GTA V ---- */
+.about-gtav {
+  min-height: 90vh; /* ocupa quase a tela toda em altura */
+}
+
+/* Gradiente diagonal da esquerda para a direita — escurece onde o texto está */
+.about-gtav .section__overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.65) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+}
+
+/* Layout em duas colunas: imagem dos personagens | texto */
+.about-gtav .section__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* duas colunas de tamanho igual */
+  gap: var(--space-xl);
+  align-items: center;
+  padding: var(--space-2xl) var(--space-xl);
+  min-height: 90vh;
+}
+
+/* Imagem dos personagens do GTA V */
+.about-gtav__image img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.6)); /* sombra dramática embaixo */
+}
+
+/* Bloco de texto: logo + título + parágrafos empilhados */
+.about-gtav__text {
+  display: flex;
+  flex-direction: column; /* empilha os elementos verticalmente */
+  gap: var(--space-md);
+}
+
+/* Logo acima do título — seletor duplo cobre GTA V e GTA Online */
+.about-gtav__text .section-logo,
+.about-gtaonline__text .section-logo {
+  display: block;          /* garante que a imagem ocupe sua própria linha */
+  height: 90px;            /* altura generosa para boa visibilidade */
+  width: auto;             /* largura calculada proporcionalmente */
+  max-width: 100%;         /* nunca ultrapassa o container em telas pequenas */
+  object-fit: contain;     /* preserva proporção sem cortar */
+  margin-bottom: var(--space-xs); /* espaço entre a logo e o h2 abaixo */
+}
+
+/* Título principal da seção GTA V */
+.about-gtav__text h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 4rem); /* tamanho fluido entre telas */
+  line-height: 1.05;
+  color: var(--color-white);
+}
+
+/* Parágrafos descritivos da seção GTA V */
+.about-gtav__text p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.85; /* altura de linha generosa para boa leitura */
+  color: var(--color-text);
+}
+
+/* ---- Seção: Sobre o GTA Online ---- */
+.about-gtaonline {
+  min-height: 90vh;
+}
+
+/* Gradiente no sentido oposto — escurece onde o texto está (lado esquerdo) */
+.about-gtaonline .section__overlay {
+  background: linear-gradient(
+    -135deg,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.65) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+}
+
+/* Layout em duas colunas: texto | imagem dos personagens online */
+.about-gtaonline .section__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+  padding: var(--space-2xl) var(--space-xl);
+  min-height: 90vh;
+}
+
+/* Imagem dos personagens do GTA Online */
+.about-gtaonline__image img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.6)); /* sombra dramática embaixo */
+}
+
+/* Bloco de texto da seção GTA Online — empurrado para a esquerda pelo order: -1 */
+.about-gtaonline__text {
+  display: flex;
+  flex-direction: column; /* empilha: logo > título > parágrafos */
+  gap: var(--space-md);
+  order: -1; /* força o texto a aparecer antes da imagem no grid */
+}
+
+
+
+/* Título principal da seção GTA Online */
+.about-gtaonline__text h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3.5rem); /* tamanho fluido entre telas */
+  line-height: 1.1;
+  color: var(--color-white);
+}
+
+/* Parágrafos descritivos da seção GTA Online */
+.about-gtaonline__text p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--color-text);
+}
+
+/* ---- Seção: Personagens (Michael, Franklin, Trevor) ---- */
+.characters {
+  min-height: 80vh;
+  background-color: var(--color-bg-section); /* cor de fundo escura padrão */
+}
+
+/* Gradiente vertical: escuro em cima e embaixo, mais claro no meio */
+.characters .section__overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+/* Espaçamento interno da seção de personagens */
+.characters .section__inner {
+  padding: var(--space-2xl) var(--space-xl);
+}
+
+/* Grade de 3 colunas — um card por personagem */
+.characters__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas iguais */
+  gap: var(--space-lg);
+}
+
+/* Card individual de cada personagem */
+.character-card {
+  background: rgba(11, 11, 11, 0.85); /* fundo escuro semi-transparente */
+  border-radius: var(--radius-md);
+  overflow: hidden; /* garante que o vídeo não ultrapasse as bordas arredondadas */
+  border: 1px solid var(--color-border-dim);
+  /* animação suave de borda e elevação no hover */
+  transition: border-color var(--transition-base), transform var(--transition-base);
+}
+
+/* Efeito hover: borda amarela + sobe levemente */
+.character-card:hover {
+  border-color: var(--color-accent); /* borda amarela Rockstar */
+  transform: translateY(-4px);       /* eleva o card 4px */
+}
+
+/* Vídeo do personagem — ocupa toda a largura, proporção 16:9 */
+.character-card video {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16/9;  /* mantém proporção widescreen */
+  object-fit: cover;   /* corta sem distorcer */
+}
+
+/* Área de texto abaixo do vídeo */
+.character-card__info {
+  padding: var(--space-md);
+}
+
+/* Nome do personagem em destaque */
+.character-card__name {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--color-white);
+  text-align: center;
+  margin-bottom: var(--space-sm);
+}
+
+/* Descrição biográfica do personagem */
+.character-card__desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+/* ---- Seção: Comprar ---- */
+.purchase {
+  background-color: var(--color-bg-section); /* fundo escuro consistente */
+  padding: var(--space-2xl) var(--space-xl);
+}
+
+/* Título "Compre Já" centralizado */
+.purchase__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem); /* cresce conforme a tela */
+  text-align: center;
+  color: var(--color-white);
+  margin-bottom: var(--space-xl);
+}
+
+/* Linha horizontal com os cards de compra centralizados */
+.purchase__grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* alinha pelo topo caso os cards tenham alturas diferentes */
+  gap: var(--space-lg);
+  flex-wrap: wrap; /* quebra linha em telas menores */
+}

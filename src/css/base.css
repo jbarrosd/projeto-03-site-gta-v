@@ -1,0 +1,55 @@
+/* ============================================================
+   BASE — estilos globais aplicados ao documento inteiro
+   Depende de tokens.css para as variáveis de cor e espaçamento
+   ============================================================ */
+
+/* Cor de fundo e fonte padrão de toda a página */
+body {
+  background-color: var(--color-bg);   /* fundo preto profundo */
+  color: var(--color-text);            /* texto branco suave */
+  font-family: var(--font-body);       /* fonte Chalet para textos corridos */
+  overflow-x: hidden;                  /* impede barra de scroll horizontal */
+}
+
+/* Contorno de foco visível para navegação por teclado (acessibilidade) */
+:focus-visible {
+  outline: 2px solid var(--color-accent); /* borda amarela Rockstar ao tabular */
+  outline-offset: 3px;                    /* espaço entre o elemento e a borda */
+}
+
+/* ---- Skip Link ---- */
+/* Link invisível que aparece ao pressionar Tab — leva direto ao conteúdo */
+/* Essencial para usuários que navegam apenas pelo teclado */
+.skip-link {
+  position: absolute;
+  top: -100%;                          /* escondido acima da tela */
+  left: var(--space-sm);
+  background: var(--color-accent);     /* fundo amarelo para alto contraste */
+  color: var(--color-black);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  z-index: calc(var(--z-modal) + 10); /* fica acima de absolutamente tudo */
+  transition: top var(--transition-fast);
+}
+
+/* Aparece na tela quando recebe foco (Tab) */
+.skip-link:focus {
+  top: var(--space-sm);
+}
+
+/* ---- Utilitário: visualmente oculto mas acessível ---- */
+/* Usado em textos que leitores de tela devem ler, mas que não aparecem visualmente */
+/* Exemplo: <h2 class="sr-only">Seção de Personagens</h2> */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0); /* recorta o elemento para 0x0 */
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,4 +1,8 @@
+/* ============================================================
+   FONTS — carregamento de fontes locais
+   ============================================================ */
 @font-face {
-    font-family: 'ChaletComprime';
-    src: url("../fonts/ChaletComprime.ttf");
+  font-family: 'ChaletComprime';
+  src: url('../fonts/ChaletComprime.ttf') format('truetype');
+  font-display: swap;
 }

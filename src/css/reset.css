@@ -1,14 +1,66 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ============================================================
+   RESET — zera os estilos padrão dos navegadores
+   Garante que todos os elementos partam do mesmo ponto visual
+   ============================================================ */
+
+/* Remove margin, padding e define box-sizing em TODOS os elementos */
+*,
+*::before,
+*::after {
+  margin: 0;              /* remove espaço externo padrão */
+  padding: 0;             /* remove espaço interno padrão */
+  box-sizing: border-box; /* padding e border contam dentro da largura total */
 }
 
-ul {
+/* Configurações globais do documento HTML */
+html {
+  font-size: 16px;                 /* base: 1rem = 16px */
+  scroll-behavior: smooth;         /* rolagem suave ao clicar em âncoras */
+  -webkit-text-size-adjust: 100%;  /* impede zoom automático de texto no iOS */
+}
+
+/* Melhora a renderização de fontes em todos os sistemas */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;  /* suaviza fontes no macOS/Chrome */
+  -moz-osx-font-smoothing: grayscale;   /* suaviza fontes no Firefox/macOS */
+}
+
+/* Imagens e vídeos nunca ultrapassam o container pai */
+img,
+video {
+  display: block;   /* remove espaço extra abaixo (comportamento inline) */
+  max-width: 100%;  /* nunca vai além da largura do container */
+}
+
+/* Remove marcadores de listas */
+ul,
+ol {
   list-style: none;
 }
 
+/* Links sem sublinhado e herdam a cor do contexto */
 a {
   text-decoration: none;
-  color: inherit;
+  color: inherit; /* herda a cor do elemento pai */
+}
+
+/* Botões: cursor de mão, sem borda/fundo padrão, herdam fonte */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit; /* navegadores não herdam fonte em botões por padrão */
+}
+
+/* Campos de formulário herdam a fonte do pai */
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Títulos sem negrito — o peso é definido individualmente pelo design */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: inherit;
 }
